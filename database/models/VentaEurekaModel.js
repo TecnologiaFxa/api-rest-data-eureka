@@ -7,7 +7,7 @@ class VentaEurekaModel extends Model {};
 
 //Indicamos los campos de nuestro modelo y adicional a esto al final indicamos el nombre que tendra en la base de datos
 
-//? todos los campos se definen como obligatorios 
+
 VentaEurekaModel.init({
 
     codigo_interno_venta:{

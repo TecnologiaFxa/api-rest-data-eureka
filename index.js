@@ -1,7 +1,12 @@
 // index.js
 const express = require('express');
-const sequelize = require('./sequelize'); // Asegúrate de importar la instancia de Sequelize
 
+
+//Conexión a la base de datos
+const sequelize = require('./database/configDatabase')
+
+//Importamos modelos de bases de datos para que el sistema los cree y/o se relacione con ellos
+require('./database/models/VentaEurekaModel')
 
 const app = express();
 
@@ -18,6 +23,9 @@ app.use(express.json());
 
 // Define tus rutas y controladores aquí
 
+
+//Archivo de rutas del API Version 1
+app.use('/api/v1/', require('./router/routerV1')); 
 
 //Se arranca la aplicación adicional se realiza la creación y conexion a la BD
 app.listen(puerto, ()=>{

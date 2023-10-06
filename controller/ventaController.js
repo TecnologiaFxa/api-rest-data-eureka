@@ -17,7 +17,7 @@ const ventaController = {
             almacenes
         } = req.query
 
-        sincData(fecha_ini, fecha_fin, almacenes, res)
+        sincData(fecha_ini?fecha_fin:new Date(), fecha_fin?fecha_fin:new Date(), almacenes?almacenes:"?", res)
     }
 
 }

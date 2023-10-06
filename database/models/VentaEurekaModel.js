@@ -11,7 +11,7 @@ class VentaEurekaModel extends Model {};
 VentaEurekaModel.init({
 
     codigo_interno_venta:{
-        type: DataTypes.STRING(30),
+        type: DataTypes.STRING(50),
         primaryKey: true
     },
 

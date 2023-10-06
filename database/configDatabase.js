@@ -10,12 +10,13 @@ require ('dotenv').config();
 //?COntraseña de la BD
 //?Un objeto que contiene tanto el host de la base de datos y que dialecto tiene, en este caso mysql
 const sequelize = new Sequelize(
-    process.env.CBSFXA_DATABASE,
-    process.env.CBSFXA_USER_DATABASE,
-    process.env.CBSFXA_PASS_DATABASE,
+    process.env.FXA_DATABASE,
+    process.env.FXA_USER_DATABASE,
+    process.env.FXA_PASS_DATABASE,
     {
-        host: process.env.CBSFXA_HOST_DATABASE,
-        dialect: process.env.CBSFXA_DIALECT_DATABASE
+        host: process.env.FXA_HOST_DATABASE,
+        dialect: process.env.FXA_DIALECT_DATABASE,
+        timezone: process.env.FXA_TIMEZONE_DATABASE,
     }
 );
 

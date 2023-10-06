@@ -17,7 +17,22 @@ const ventaController = {
             almacenes
         } = req.query
 
-        sincData(fecha_ini?fecha_fin:new Date(), fecha_fin?fecha_fin:new Date(), almacenes?almacenes:"?", res)
+        if (fecha_ini > fecha_fin) {
+            res.json('La fecha de inicio no puede ser superior a la fecha final');
+        } else {
+            // Calcula la diferencia en milisegundos entre las dos fechas
+            const diferenciaMs = new Date(fecha_fin) - new Date(fecha_ini);
+            
+            // Convierte la diferencia de milisegundos a días
+            const diferenciaDias = diferenciaMs / (1000 * 60 * 60 * 24);
+            
+            if (diferenciaDias > 7) {
+                res.json('La diferencia entre las fechas no puede ser superior a 7 días');
+            } else {
+                sincData(fecha_ini ? fecha_fin : new Date(), fecha_fin ? fecha_fin : new Date(), almacenes ? almacenes : "?", res);
+            }
+        }
+    
     }
 
 }

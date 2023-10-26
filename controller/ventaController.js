@@ -10,30 +10,37 @@ const ventaController = {
         sincData(new Date(), new Date(), "?", res)
     },
 
-    sincManual: async(req,res)=>{
+    sincManual: async (req, res) => {
         const {
-            fecha_ini, 
-            fecha_fin, 
+            fecha_ini,
+            fecha_fin,
             almacenes
-        } = req.query
-
-        if (fecha_ini > fecha_fin) {
+        } = req.query;
+    
+        // Función para validar si una fecha es válida
+        function esFechaValida(fecha) {
+            return !isNaN(Date.parse(fecha));
+        }
+    
+        if (!esFechaValida(fecha_ini) || !esFechaValida(fecha_fin)) {
+            res.json('Una o ambas fechas no son válidas');
+        } else if (fecha_ini > fecha_fin) {
             res.json('La fecha de inicio no puede ser superior a la fecha final');
         } else {
             // Calcula la diferencia en milisegundos entre las dos fechas
             const diferenciaMs = new Date(fecha_fin) - new Date(fecha_ini);
-            
+    
             // Convierte la diferencia de milisegundos a días
             const diferenciaDias = diferenciaMs / (1000 * 60 * 60 * 24);
-            
+    
             if (diferenciaDias > 7) {
                 res.json('La diferencia entre las fechas no puede ser superior a 7 días');
             } else {
                 sincData(fecha_ini ? fecha_fin : new Date(), fecha_fin ? fecha_fin : new Date(), almacenes ? almacenes : "?", res);
             }
         }
-    
     }
+    
 
 }
 
@@ -158,14 +165,24 @@ const sincData = async(fecha_ini, fecha_fin, almacenes, res) =>{
     }
 }
 
-const formatDateNow = (dateToFormat) =>{
-    const fechaActual = new Date(dateToFormat);
+const formatDateNow = (dateToFormat) => {
+    
+    let fechaActualCO
 
-    const año = fechaActual.getFullYear(); // Obtiene el año (por ejemplo, 2023)
-    const mes = String(fechaActual.getMonth() + 1).padStart(2, '0'); // Obtiene el mes (0-11) y lo formatea a dos dígitos
-    const dia = String(fechaActual.getDate()).padStart(2, '0'); // Obtiene el día del mes y lo formatea a dos dígitos
-
+    if (!(dateToFormat instanceof Date)) {
+        fechaActualCO = new Date(dateToFormat); // Utiliza la fecha actual si dateToFormat no es una instancia de Date
+    }else{
+        fechaActualCO = new Date(dateToFormat.getTime() - 5 * 60 * 60 * 1000); // GMT-5 para Colombia
+    }
+  
+    // Crear un objeto de fecha en la zona horaria de Colombia (GMT-5)
+  
+    const año = fechaActualCO.getFullYear();
+    const mes = String(fechaActualCO.getMonth() + 1).padStart(2, '0');
+    const dia = String(fechaActualCO.getDate()).padStart(2, '0');
+  
+    console.log(fechaActualCO)
     return `${año}/${mes}/${dia}`;
-}
+  }
 
 module.exports = ventaController

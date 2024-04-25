@@ -36,7 +36,7 @@ const ventaController = {
             if (diferenciaDias > 7) {
                 res.json('La diferencia entre las fechas no puede ser superior a 7 días');
             } else {
-                sincData(fecha_ini ? fecha_fin : new Date(), fecha_fin ? fecha_fin : new Date(), almacenes ? almacenes : "?", res);
+                sincData(fecha_ini ? fecha_ini : new Date(), fecha_fin ? fecha_fin : new Date(), almacenes ? almacenes : "?", res);
             }
         }
     }
